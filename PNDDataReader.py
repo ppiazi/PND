@@ -17,8 +17,12 @@ class PNDDataReader:
         """
         read a csv file containing task information and return a dict.
         """
-        csv_file = open(self._file_name)
-        
+        try:
+            csv_file = open(self._file_name)
+        except:
+            print("Error : file not found %s" % self._file_name)
+            return None
+
         csv_reader = csv.reader(csv_file, delimiter=',')
         
         task_dict = {}        

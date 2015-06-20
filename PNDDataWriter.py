@@ -5,8 +5,8 @@ Created on Sat Jun 20 15:53:11 2015
 @author: ppiazi
 """
 
-from PND import PND
-from SCurve import SCurve
+from PNDHandler import PNDHandler
+from SCurveHandler import SCurveHandler
 
 import xlwt
 
@@ -39,8 +39,9 @@ class PNDDataWriter:
         self._sheet2 = self._wbk.add_sheet("SCurve Data", cell_overwrite_ok=True)
         self._start_day = self._scurve_data.getStartDay()
         self._end_day = self._scurve_data.getEndDay()
-        
-        self._sheet2.write(0,1, "type")        
+
+        self._sheet2.write(0,0, "Task Name")
+        self._sheet2.write(0,1, "Type(ES/LF)")
         
         x = 2
         for i in range(self._start_day, self._end_day + 1):

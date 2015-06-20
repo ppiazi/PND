@@ -8,12 +8,12 @@ Created on Sat Jun 20 09:40:07 2015
 from TaskEntity import TaskEntity
 from PNDDataReader import PNDDataReader
 
-class PND:
+class PNDHandler:
     def __init__(self, file_name):
         self._pnd_data_reader = PNDDataReader(file_name)
-        self._pnd_data_dict = self._pnd_data_reader.loadFile()
-        self._root_task_name = self.findTaskNameByType(TaskEntity.ROOT_NODE)
-        self._end_task_name = self.findTaskNameByType(TaskEntity.END_NODE)
+        self._pnd_data_dict = {}
+        self._root_task_name = ""
+        self._end_task_name = ""
         self._critical_paths = []
 
     def getPNDDataDict(self):
@@ -56,9 +56,18 @@ class PND:
         
     def analyze(self):
         """ 주어진 Task 정보를 분석하여 ES, EF, LS, LF, TF를 계산한다."""
+        self._pnd_data_dict = self._pnd_data_reader.loadFile()
+        if self._pnd_data_dict == None:
+            return False
+
+        self._root_task_name = self.findTaskNameByType(TaskEntity.ROOT_NODE)
+        self._end_task_name = self.findTaskNameByType(TaskEntity.END_NODE)
+
         self.goForward(self._root_task_name, None, 1)        
         self.goBackward(self._end_task_name, self._pnd_data_dict[self._end_task_name].getEs())
-        self.calTf()        
+        self.calTf()
+
+        return True
     
     def findTaskNameByType(self, ntype):
         """ Task가 Root인지 End 인지 파악한다."""
@@ -135,7 +144,7 @@ def displayList(list_data):
         print("%s \t %d \t %d \t %d \t %d \t %d \t %d" % (task_info.getName(), task_info.getDuration(), task_info.getEs(), task_info.getEf(), task_info.getLs(), task_info.getLf(), task_info.getTf()))
 
 if __name__ == "__main__":
-    a = PND("data2.csv")
+    a = PNDHandler("data2.csv")
     a.analyze()
     a.displayData()
     a.getCriticalTasks()
