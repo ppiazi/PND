@@ -10,7 +10,7 @@ class TaskEntity:
     NORMAL_NODE = 2
     END_NODE = 3
        
-    def __init__(self, name, duration, next_tasks, entity_type):        
+    def __init__(self, name, duration, next_tasks, entity_type, cost, hs):        
         self._name = name
         self._duration = duration
         self._entity_type = entity_type
@@ -21,6 +21,8 @@ class TaskEntity:
         self._tf = -1
         self._next_tasks = next_tasks
         self._prev_tasks = []
+        self._cost = cost
+        self._hs = hs
         
     def setEntityType(self, entity_type):
         self._entity_type = entity_type
@@ -84,4 +86,16 @@ class TaskEntity:
         
     def getPrevTasks(self):
         return self._prev_tasks
+
+    def setCost(self, cost):
+        self._cost = cost        
+    
+    def getCost(self):
+        return self._cost
+        
+    def setHs(self, hs):
+        self._hs = hs
+    
+    def getHs(self):
+        return self._hs
     

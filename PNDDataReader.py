@@ -7,6 +7,7 @@ Created on Sat Jun 20 09:55:09 2015
 
 import csv
 import TaskEntity
+import collections
 
 class PNDDataReader:
     def __init__(self, file_name):
@@ -28,10 +29,12 @@ class PNDDataReader:
             else:
                 next_list = None
             # 0 : Name, 1 : Duration, 2 : Next Tasks, 3 : Node Type
-            t = TaskEntity.TaskEntity(row[0], int(row[1]), next_list, int(row[3]))
+            t = TaskEntity.TaskEntity(row[0], int(row[1]), next_list, int(row[3]), int(row[4]), int(row[5]))
             task_dict[row[0]] = t
-            
-        return task_dict
+        
+        ordered_task_dict = collections.OrderedDict(sorted(task_dict.items()))        
+        
+        return ordered_task_dict
 
 if __name__ == "__main__":
     a = PNDDataReader("data1.csv")
