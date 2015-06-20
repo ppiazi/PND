@@ -64,7 +64,7 @@ class PNDHandler:
         self._end_task_name = self.findTaskNameByType(TaskEntity.END_NODE)
 
         self.goForward(self._root_task_name, None, 1)        
-        self.goBackward(self._end_task_name, self._pnd_data_dict[self._end_task_name].getEs())
+        self.goBackward(self._end_task_name, self._pnd_data_dict[self._end_task_name].getEf())
         self.calTf()
 
         return True

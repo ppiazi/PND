@@ -26,14 +26,15 @@ class PNDDataWriter:
     def initPNDDataHeading(self):        
         self._sheet1 = self._wbk.add_sheet("PND Data", cell_overwrite_ok=True)
         self._sheet1.write(0, 0, "Task Name")
-        self._sheet1.write(0, 1, "Duration")
-        self._sheet1.write(0, 2, "ES")
-        self._sheet1.write(0, 3, "EF")
-        self._sheet1.write(0, 4, "LS")
-        self._sheet1.write(0, 5, "LF")
-        self._sheet1.write(0, 6, "TF")
-        self._sheet1.write(0, 7, "Cost")
-        self._sheet1.write(0, 8, "Human Resource")
+        self._sheet1.write(0, 1, "Next Task")
+        self._sheet1.write(0, 2, "Duration")
+        self._sheet1.write(0, 3, "ES")
+        self._sheet1.write(0, 4, "EF")
+        self._sheet1.write(0, 5, "LS")
+        self._sheet1.write(0, 6, "LF")
+        self._sheet1.write(0, 7, "TF")
+        self._sheet1.write(0, 8, "Cost")
+        self._sheet1.write(0, 9, "Human Resource")
         
     def initSCurveDataHeading(self):
         self._sheet2 = self._wbk.add_sheet("SCurve Data", cell_overwrite_ok=True)
@@ -53,14 +54,19 @@ class PNDDataWriter:
         for key in self._pnd_data_dict.keys():
             task_info = self._pnd_data_dict[key]
             self._sheet1.write(row, 0, task_info.getName())
-            self._sheet1.write(row, 1, task_info.getDuration())
-            self._sheet1.write(row, 2, task_info.getEs())
-            self._sheet1.write(row, 3, task_info.getEf())
-            self._sheet1.write(row, 4, task_info.getLs())
-            self._sheet1.write(row, 5, task_info.getLf())
-            self._sheet1.write(row, 6, task_info.getTf())
-            self._sheet1.write(row, 7, task_info.getCost())
-            self._sheet1.write(row, 8, task_info.getHs())
+            if task_info.getNextTasks() != None:
+                t_n_tasks = ",".join(task_info.getNextTasks())
+            else:
+                t_n_tasks = ""
+            self._sheet1.write(row, 1, t_n_tasks)
+            self._sheet1.write(row, 2, task_info.getDuration())
+            self._sheet1.write(row, 3, task_info.getEs())
+            self._sheet1.write(row, 4, task_info.getEf())
+            self._sheet1.write(row, 5, task_info.getLs())
+            self._sheet1.write(row, 6, task_info.getLf())
+            self._sheet1.write(row, 7, task_info.getTf())
+            self._sheet1.write(row, 8, task_info.getCost())
+            self._sheet1.write(row, 9, task_info.getHs())
             row = row + 1
 
     def writeSCurveData(self):

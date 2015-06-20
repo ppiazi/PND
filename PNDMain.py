@@ -10,9 +10,10 @@ import sys
 from PNDHandler import PNDHandler
 from SCurveHandler import SCurveHandler
 from PNDDataWriter import PNDDataWriter
-#import matplotlib.pyplot as plt
-#import collections
-"""
+import matplotlib.pyplot as plt
+import collections
+
+
 def drawPlot(pnd, scurve):
     x_axis = range(scurve.getStartDay(), scurve.getEndDay() + 1)
     ori_dict = scurve.getScurveDataEsAccTotal()
@@ -27,7 +28,6 @@ def drawPlot(pnd, scurve):
 
     plt.plot(x_axis, y_axis_1, x_axis, y_axis_2)
     plt.show()
-"""
 
 def print_usage():
     print("PNDMain.exe [csv file]")
@@ -39,6 +39,7 @@ if __name__ == "__main__":
         os._exit(1)
 
     input_csv_file = sys.argv[1]
+    input_file_name = input_csv_file[0:input_csv_file.rindex('.')]
 
     # 정보 파일을 읽어 PND 데이터를 만든다.
     pnd = PNDHandler(input_csv_file)
@@ -54,7 +55,7 @@ if __name__ == "__main__":
     scurve.analyzeScurveWithLf()
     
     # PND 데이터와 SCurve 데이터를 기반으로 엑셀을 만든다.
-    writer = PNDDataWriter("result.xls", pnd, scurve)
+    writer = PNDDataWriter(input_file_name + ".xls", pnd, scurve)
     writer.writeData()
 
-    #drawPlot(pnd, scurve)
+    drawPlot(pnd, scurve)
