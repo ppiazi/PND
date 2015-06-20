@@ -69,6 +69,21 @@ class PNDDataWriter:
             self._sheet1.write(row, 9, task_info.getHs())
             row = row + 1
 
+        self._sheet1.write(row, 0, "CP : ")
+        cp_list = self._pnd_data.getCriticalPaths()
+
+        # Critical Path를 만든다.
+        if cp_list != None:
+            cp_str = ""
+
+            for item in cp_list[0]:
+                cp_str = cp_str + item.getName() + '-'
+            cp_str = cp_str[:cp_str.rindex('-')]
+        else:
+            cp_str = "None"
+
+        self._sheet1.write(row, 1, cp_str)
+
     def writeSCurveData(self):
         row = 1
         
@@ -83,7 +98,9 @@ class PNDDataWriter:
                 self._sheet2.write(row, col + i, task_scurve_es[i])
             
             row = row + 1
-      
+
+        row = row + 2
+
         for key in self._scurve_data_lf.keys():
             col = 1
             task_scurve_lf = self._scurve_data_lf[key]
