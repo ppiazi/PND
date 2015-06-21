@@ -6,7 +6,7 @@ Created on Sat Jun 20 09:40:07 2015
 """
 
 from TaskEntity import TaskEntity
-from PNDDataReader import PNDDataReader
+from TaskInfoReader import PNDDataReader
 
 class PNDHandler:
     def __init__(self, file_name):
